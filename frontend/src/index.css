@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --bg: #f6f1e8;
+  --paper: #fff8ef;
+  --ink: #1c1b1a;
+  --muted: #5f5a54;
+  --brand: #7a4a1f;
+  --accent: #9a4d17;
+  --card: #fffdf7;
+  --card-border: #eadfce;
+  --shadow: 0 18px 40px rgba(32, 24, 16, 0.12);
+}
+
+body {
+  font-family: "Archivo", "Segoe UI", sans-serif;
+  background: radial-gradient(1200px 600px at 10% -10%, #f1e3cf, transparent),
+    radial-gradient(900px 500px at 90% 10%, #ffe1cc, transparent), var(--bg);
+  color: var(--ink);
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Fraunces", "Georgia", serif;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.panel-soft {
+  background: #fff6ea;
+  border: 1px dashed #e7d6c1;
+  border-radius: 18px;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+}
+
+.float-slow {
+  animation: float 16s ease-in-out infinite;
+}
+
+.float-slower {
+  animation: float 22s ease-in-out infinite;
+}
+
+.fade-up {
+  animation: fadeUp 520ms ease both;
+}
+
+.sticker {
+  border-radius: 999px;
+  border: 1px solid #e6d3bd;
+  background: #fff2e2;
+  color: #7a4a1f;
+}
+
+.label {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

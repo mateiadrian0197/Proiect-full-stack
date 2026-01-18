@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  name      String
+  role      Role      @default(STUDENT)
+  createdAt DateTime  @default(now())
+
+  courses   Course[]
+  comments  Comment[]
+}
+
+model Course {
+  id          String      @id @default(uuid())
+  title       String
+  description String
+  category    String
+  createdAt   DateTime    @default(now())
+
+  ownerId     String
+  owner       User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  resources   Resource[]
+  comments    Comment[]
+}
+
+model Resource {
+  id        String        @id @default(uuid())
+  title     String
+  url       String
+  type      ResourceType
+  createdAt DateTime      @default(now())
+
+  courseId  String
+  course    Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  STUDENT
+  PROFESSOR
+}
+
+enum ResourceType {
+  PDF
+  LINK
+  VIDEO
+}
