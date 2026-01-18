@@ -12,11 +12,25 @@ const app = Fastify({ logger: true });
 
 async function start() {
   // CORS (frontend pe 5173)
-  await app.register(cors, {
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  });
+ const allowedOrigins = [
+  "http://localhost:5173",
+  "https://proiect-full-stack-7tjhrkkmw-matei-adrians-projects.vercel.app"
+];
+
+await app.register(cors, {
+  origin: (origin, cb) => {
+    // permite request-uri fără origin (Render health check, Postman)
+    if (!origin) return cb(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Not allowed by CORS"), false);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+});
 
   // Cookies
   await app.register(cookie);
